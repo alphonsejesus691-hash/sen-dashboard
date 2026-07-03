@@ -1,1 +1,1 @@
-web: python sen16.py
+web: python sen16.py --host 0.0.0.0 --port $PORT
