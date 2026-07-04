@@ -5093,6 +5093,24 @@ class SENDashboard:
             for comp in ("digester", "photobioreactor"):
                 if comp in payload and isinstance(payload[comp], dict):
                     self.realtime_data.setdefault(comp, {}).update(payload[comp])
+
+            # Accumulation dans l'historique réel : chaque mesure ESP32 est ajoutée
+            # à la suite des séries historiques (au lieu de rester figée en simulation).
+            now_iso = datetime.now().isoformat()
+            for comp in ("digester", "photobioreactor"):
+                hist = self.historical_data.setdefault(comp, {"timestamps": []})
+                hist.setdefault("timestamps", []).append(now_iso)
+                current_values = self.realtime_data.get(comp, {})
+                for key, value in current_values.items():
+                    if isinstance(value, (int, float)):
+                        hist.setdefault(key, []).append(value)
+                # Limite mémoire : conserve les 5000 derniers points par série
+                if len(hist["timestamps"]) > 5000:
+                    hist["timestamps"] = hist["timestamps"][-5000:]
+                    for key in list(hist.keys()):
+                        if key != "timestamps" and isinstance(hist[key], list):
+                            hist[key] = hist[key][-5000:]
+
             return jsonify({"status": "ok", "measurements_count": self.measurements_count})
 
         @app.route("/api/health")
@@ -5182,12 +5200,25 @@ class SENDashboard:
     # ── Thread temps réel ──────────────────────────────────────────────────────
     def _update_realtime_data(self):
         rng = np.random.default_rng()
+        CHAMPS_REELS = {"co2_entree", "co2_sortie", "ch4_concentration", "temperature", "gas_flow", "ph", "biomass_density"}
         while not self._stop_event.wait(timeout=2):
             try:
+                # Calcul économique réel basé sur la production actuelle (gas_flow ESP32 en L/min)
+                gas_flow_lmin = self.realtime_data.get("digester", {}).get("gas_flow", 0)
+                gas_flow_m3h = gas_flow_lmin * 0.06  # conversion L/min -> m3/h
+                prix_biogaz = 650  # FCFA/m3
+                revenue_biogaz = gas_flow_m3h * 24 * prix_biogaz
+                daily_cost = self.realtime_data.get("economics", {}).get("daily_cost_fcfa", 25000)
+                eco = self.realtime_data.setdefault("economics", {})
+                eco["daily_revenue_fcfa"] = round(revenue_biogaz, 0)
+                eco["daily_profit_fcfa"] = round(revenue_biogaz - daily_cost, 0)
+                eco["daily_revenue"] = eco["daily_revenue_fcfa"]
+                eco["daily_profit"] = eco["daily_profit_fcfa"]
+
                 for component, sensors in self.realtime_data.items():
                     if isinstance(sensors, dict):
                         for key, value in sensors.items():
-                            if isinstance(value, (int, float)):
+                            if isinstance(value, (int, float)) and key not in CHAMPS_REELS:
                                 new_val = value * (1 + float(rng.uniform(-0.01, 0.01)))
                                 sensors[key] = round(new_val, 4)
                 rooms = self.socketio.server.manager.rooms.get("/", {})
