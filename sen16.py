@@ -226,7 +226,7 @@ body { background-color: #121212; color: #fff; font-family: 'Segoe UI', sans-ser
 </head>
 <body>
 <div id="demo-banner" style="background:#B71C1C;color:#fff;text-align:center;padding:8px;font-weight:600;font-size:.9rem">
-⚠️ Mode Démo — En attente des données ESP32
+⚠️ Mode Démo : En attente des données ESP32
 </div>
 <script>
 fetch('/api/data/status').then(r=>r.json()).then(d=>{
@@ -404,7 +404,7 @@ body { background-color:#121212; color:#fff; font-family:'Segoe UI',sans-serif; 
 </head>
 <body>
 <div id="demo-banner" style="background:#B71C1C;color:#fff;text-align:center;padding:8px;font-weight:600;font-size:.9rem">
-⚠️ Mode Démo — En attente des données ESP32
+⚠️ Mode Démo : En attente des données ESP32
 </div>
 <script>
 fetch('/api/data/status').then(r=>r.json()).then(d=>{
@@ -496,27 +496,27 @@ fetch('/api/data/status').then(r=>r.json()).then(d=>{
 <div class="parameter-card">
 <div class="label">🔵 CO₂ Entrée</div>
 <div class="value text-info" id="gas-co2-entree">{{ realtime_data.digester.co2_entree | default(0) | round(1) }}%</div>
-<small>CO₂ dans le biogaz brut — Seuil normal : 25-45%</small>
+<small>CO₂ dans le biogaz brut : Seuil normal : 25-45%</small>
 </div>
 </div>
 <div class="col-md-3">
 <div class="parameter-card">
 <div class="label">🟢 CO₂ Sortie / Injecté PBR</div>
 <div class="value text-success" id="gas-co2-sortie">{{ realtime_data.photobioreactor.co2_sortie | default(0) | round(2) }}%</div>
-<small>CO₂ injecté dans le photobioréacteur — Seuil normal : 1-5%</small>
+<small>CO₂ injecté dans le photobioréacteur : Seuil normal : 1-5%</small>
 </div>
 </div>
 <div class="col-md-3">
 <div class="parameter-card">
 <div class="label">🟣 CH₄ Concentration</div>
 <div class="value" style="color:#9C27B0" id="gas-ch4">{{ realtime_data.digester.ch4_concentration | round(1) }}%</div>
-<small>Méthane dans le biogaz — Seuil normal : 50-70%</small>
+<small>Méthane dans le biogaz : Seuil normal : 50-70%</small>
 </div>
 </div>
 <div class="col-md-3">
 <div class="parameter-card">
 <div class="label">🟠 Qualité Biogaz</div>
-<div class="value text-warning" id="gas-qualite">--</div>
+<div class="value text-warning" id="gas-qualite"></div>
 <small>Plus c'est haut, meilleur est le biogaz</small>
 </div>
 </div>
@@ -565,7 +565,7 @@ fetch('/api/data/status').then(r=>r.json()).then(d=>{
 <div class="col-4"><div class="label">Prévision 48h</div><div class="value" id="spir-48" style="font-size:1.6rem;color:#9C27B0">--</div></div>
 </div>
 <div class="alert mt-3 mb-0" id="spir-msg" style="background:#1a1a1a;border:1px solid #444;color:#ddd;font-size:.9rem">Analyse en cours...</div>
-<small class="text-muted d-block mt-2"><i class="fas fa-flask me-1"></i>pH idéal : 8.5 à 9.2 — Temp. idéale : 30 à 35°C</small>
+<small class="text-muted d-block mt-2"><i class="fas fa-flask me-1"></i>pH idéal : 8.5 à 9.2 : Temp. idéale : 30 à 35°C</small>
 </div>
 </div>
 </div>
@@ -590,7 +590,7 @@ fetch('/api/data/status').then(r=>r.json()).then(d=>{
 <div class="parameter-card">
 <div class="label">Température Digesteur</div>
 <div class="value text-info" id="digester-temp">{{ realtime_data.digester.temperature | round(2) }}°C</div>
-<small>Plage : 35--38 °C</small>
+<small>Plage : 35 à 38 °C</small>
 </div>
 <div class="parameter-card">
 <div class="label">Injection CO₂</div>
@@ -605,12 +605,12 @@ fetch('/api/data/status').then(r=>r.json()).then(d=>{
 <div class="parameter-card">
 <div class="label">pH Photobioréacteur</div>
 <div class="value text-warning" id="pbr-ph">{{ realtime_data.photobioreactor.ph | round(2) }}</div>
-<small>Plage : 7.0--8.5</small>
+<small>Plage : 7.0 à 8.5</small>
 </div>
 <div class="parameter-card">
 <div class="label">Température PBR</div>
 <div class="value text-info" id="pbr-temp">{{ realtime_data.photobioreactor.temperature | round(2) }}°C</div>
-<small>Plage : 24--30 °C</small>
+<small>Plage : 24 à 30 °C</small>
 </div>
 <div class="parameter-card">
 <div class="label">Vol. Eau CO₂ + Nutriments</div>
@@ -691,7 +691,7 @@ function loadHarvest(){
       alertDiv.innerHTML='<div class="alert alert-success mb-0" style="font-size:1.1rem"><strong>🌿 La spiruline est prête à être récoltée !</strong><br><small>Densité actuelle : '+d.densite+' g/L (seuil : '+d.seuil+' g/L)</small></div>';
       actDiv.innerHTML='<button class="btn btn-success btn-lg w-100" onclick="startHarvest()"><i class="fas fa-cut me-2"></i>Démarrer la Récolte</button>';
     } else {
-      alertDiv.innerHTML='<div class="alert alert-warning mb-0">⏳ Croissance en cours — récolte dans environ <strong>'+d.jours_restants+' jour(s)</strong><br><small>Densité actuelle : '+d.densite+' g/L (objectif : '+d.seuil+' g/L)</small></div>';
+      alertDiv.innerHTML='<div class="alert alert-warning mb-0">⏳ Croissance en cours : récolte dans environ <strong>'+d.jours_restants+' jour(s)</strong><br><small>Densité actuelle : '+d.densite+' g/L (objectif : '+d.seuil+' g/L)</small></div>';
       actDiv.innerHTML='';
     }
     const hist=document.getElementById('harvest-history');
@@ -726,7 +726,7 @@ function exportPDF(){
   const pred = window._lastPred||{};
   let y=18;
   doc.setFontSize(18); doc.setTextColor(46,125,50);
-  doc.text('Rapport SEN — Symbiotic Energy Nexus', 14, y); y+=8;
+  doc.text('Rapport SEN : Symbiotic Energy Nexus', 14, y); y+=8;
   doc.setFontSize(10); doc.setTextColor(80);
   doc.text('Genere le : '+now.toLocaleString('fr-FR'), 14, y); y+=10;
   doc.setDrawColor(76,175,80); doc.line(14,y,196,y); y+=8;
@@ -885,7 +885,7 @@ function loadData(period, btn) {
             {x:data.timestamps,y:data.revenue,type:'bar',name:'Revenus (FCFA)',marker:{color:'#4CAF50'}},
             {x:data.timestamps,y:data.cost,type:'bar',name:'Coûts (FCFA)',marker:{color:'#F44336'}},
             {x:data.timestamps,y:data.profit,type:'scatter',mode:'lines+markers',name:'Profit (FCFA)',line:{color:'#FFC107',width:3}}
-        ],{title:'Performances Économiques -- '+label+' (FCFA/j)',barmode:'group',template:'plotly_dark',height:400,plot_bgcolor:'#1e1e1e',paper_bgcolor:'#2d2d2d',yaxis:{ticksuffix:' FCFA'}});
+        ],{title:'Performances Économiques : '+label+' (FCFA/j)',barmode:'group',template:'plotly_dark',height:400,plot_bgcolor:'#1e1e1e',paper_bgcolor:'#2d2d2d',yaxis:{ticksuffix:' FCFA'}});
     });
     fetch('/api/historical/photobioreactor?period='+period).then(r=>r.json()).then(data=>{
         function stats(arr){var mn=Math.min(...arr),mx=Math.max(...arr),av=arr.reduce((a,b)=>a+b,0)/arr.length;return{min:mn.toFixed(2),max:mx.toFixed(2),avg:av.toFixed(2)};}
@@ -1200,7 +1200,7 @@ function downloadReport(type){
     ];
     rowsWeekly.forEach(r => { doc.text(String(r[0]), 16, y); doc.text(String(r[1]), 130, y); y += 6; });
     y += 6; doc.setFontSize(8); doc.setTextColor(120);
-    doc.text('Systeme SEN — rapport ' + type + ' — Benin', 14, 285);
+    doc.text('Systeme SEN : rapport ' + type + '  Benin', 14, 285);
     doc.save('rapport_SEN_' + now.toISOString().slice(0,10) + '.pdf');
 }
 </script>
@@ -1682,7 +1682,7 @@ body { background-color: #121212; color: #fff; font-family: 'Segoe UI', sans-ser
 </head>
 <body>
 <div id="demo-banner" style="background:#B71C1C;color:#fff;text-align:center;padding:8px;font-weight:600;font-size:.9rem">
-⚠️ Mode Démo — En attente des données ESP32
+⚠️ Mode Démo : En attente des données ESP32
 </div>
 <script>
 fetch('/api/data/status').then(r=>r.json()).then(d=>{
@@ -1746,7 +1746,7 @@ fetch('/api/data/status').then(r=>r.json()).then(d=>{
 <i class="fas fa-fire" style="color:#FF7043;font-size:1.4rem"></i>
 <div>
 <div class="fw-bold">Biogaz Purifié</div>
-<small class="text-muted">Fourchette marché : 500 -- 800 FCFA / m³</small>
+<small class="text-muted">Fourchette marché : 500 à 800 FCFA / m³</small>
 </div>
 <span class="price-badge bg-warning text-dark ms-auto">650 FCFA / m³</span>
 </div>
@@ -1756,9 +1756,9 @@ fetch('/api/data/status').then(r=>r.json()).then(d=>{
 <i class="fas fa-seedling" style="color:#66BB6A;font-size:1.4rem"></i>
 <div>
 <div class="fw-bold">Spiruline (Algues)</div>
-<small class="text-muted">Fraîche : 6 500 FCFA/kg -- Séchée : 20 000 FCFA/kg</small>
+<small class="text-muted">Fraîche : 6 500 FCFA/kg / Séchée : 20 000 FCFA/kg</small>
 </div>
-<span class="price-badge bg-success ms-auto">6 500 -- 20 000 FCFA / kg</span>
+<span class="price-badge bg-success ms-auto">6 500 à 20 000 FCFA / kg</span>
 </div>
 </div>
 </div>
@@ -1782,19 +1782,19 @@ fetch('/api/data/status').then(r=>r.json()).then(d=>{
 <div class="row mb-4" id="quick-stats">
 <div class="col-md-3">
 <div class="stat-mini">
-<div class="val" id="stat-biogaz-total">---</div>
+<div class="val" id="stat-biogaz-total"></div>
 <div class="lbl">CA Biogaz (période)</div>
 </div>
 </div>
 <div class="col-md-3">
 <div class="stat-mini">
-<div class="val" id="stat-spiruline-total">---</div>
+<div class="val" id="stat-spiruline-total"></div>
 <div class="lbl">CA Spiruline (période)</div>
 </div>
 </div>
 <div class="col-md-3">
 <div class="stat-mini">
-<div class="val" id="stat-grand-total">---</div>
+<div class="val" id="stat-grand-total"></div>
 <div class="lbl">CA Total (période)</div>
 </div>
 </div>
@@ -1851,11 +1851,11 @@ Aucune vente enregistrée. Utilisez le formulaire ci-dessous pour saisir vos pre
 <tfoot>
 <tr class="total-row" id="total-row" style="display:none">
 <td colspan="3" class="text-end">TOTAL GLOBAL</td>
-<td id="foot-ca-biogaz">---</td>
+<td id="foot-ca-biogaz"></td>
 <td></td>
 <td></td>
-<td id="foot-ca-spiruline">---</td>
-<td id="foot-total"><strong>---</strong></td>
+<td id="foot-ca-spiruline"></td>
+<td id="foot-total"><strong></strong></td>
 </tr>
 </tfoot>
 </table>
@@ -2043,7 +2043,7 @@ function renderPredictions(d) {
                         <div>
                             <div class="fw-bold mb-1"><i class="fas fa-fire me-1" style="color:#FF7043"></i>Prix conseillé Biogaz</div>
                             <div class="prix-val text-warning">${fmtFcfa(rb.prix_conseille||400)} / m³</div>
-                            <div class="prix-fourch">Fourchette : ${fmtFcfa(rb.fourchette_min||500)} -- ${fmtFcfa(rb.fourchette_max||800)}</div>
+                            <div class="prix-fourch">Fourchette : ${fmtFcfa(rb.fourchette_min||500)}  ${fmtFcfa(rb.fourchette_max||800)}</div>
                             <div class="pred-justif">${rb.justification || ''}</div>
                         </div>
                         <span class="badge bg-info ms-2" style="font-size:.72rem;white-space:normal;max-width:80px">${rb.confidence_pct||'---'}% conf.</span>
@@ -2056,7 +2056,7 @@ function renderPredictions(d) {
                         <div>
                             <div class="fw-bold mb-1"><i class="fas fa-seedling me-1" style="color:#66BB6A"></i>Prix conseillé Spiruline</div>
                             <div class="prix-val text-success">${fmtFcfa(rs.prix_conseille||6500)} / kg</div>
-                            <div class="prix-fourch">Fourchette : ${fmtFcfa(rs.fourchette_min||6500)} -- ${fmtFcfa(rs.fourchette_max||20000)}</div>
+                            <div class="prix-fourch">Fourchette : ${fmtFcfa(rs.fourchette_min||6500)}  ${fmtFcfa(rs.fourchette_max||20000)}</div>
                             <div class="pred-justif">${rs.justification || ''}</div>
                         </div>
                         <span class="badge bg-info ms-2" style="font-size:.72rem;white-space:normal;max-width:80px">${rs.confidence_pct||'---'}% conf.</span>
@@ -2406,7 +2406,7 @@ body { background-color: #121212; color: #fff; font-family: 'Segoe UI', sans-ser
 </div>
 <div class="col-md-10 content">
 <div class="d-flex justify-content-between align-items-center mb-4">
-<h2><i class="fas fa-chart-pie me-2" style="color:#4CAF50"></i>Module Performance Économique -- CAPEX / OPEX / ROI</h2>
+<h2><i class="fas fa-chart-pie me-2" style="color:#4CAF50"></i>Module Performance Économique CAPEX / OPEX / ROI</h2>
 <div class="d-flex gap-2 align-items-center">
 <span class="revenu-live" id="revenu-live-badge"><i class="fas fa-sync-alt me-1"></i>En attente de données marketing...</span>
 <span class="badge bg-success"><i class="fas fa-circle me-1"></i>En ligne</span>
@@ -2468,7 +2468,7 @@ body { background-color: #121212; color: #fff; font-family: 'Segoe UI', sans-ser
 <h5 class="mb-0"><i class="fas fa-industry me-2" style="color:#2196F3"></i>Investissements Initiaux</h5>
 </div>
 <div class="card-body">
-<p class="section-lbl">Saisie en FCFA -- calculé automatiquement</p>
+<p class="section-lbl">Saisie en FCFA : calculé automatiquement</p>
 <div class="mb-3">
 <label class="form-label text-muted small">Coût du biodigesteur</label>
 <div class="input-group">
@@ -2514,7 +2514,7 @@ body { background-color: #121212; color: #fff; font-family: 'Segoe UI', sans-ser
 <h5 class="mb-0"><i class="fas fa-cogs me-2" style="color:#FF9800"></i>Charges Opérationnelles Mensuelles</h5>
 </div>
 <div class="card-body">
-<p class="section-lbl">Saisie mensuelle en FCFA -- totaux calculés automatiquement</p>
+<p class="section-lbl">Saisie mensuelle en FCFA : totaux calculés automatiquement</p>
 <div class="mb-3">
 <label class="form-label text-muted small">Main d'œuvre</label>
 <div class="input-group">
@@ -2863,7 +2863,7 @@ recalcAll();
 <div class="section-lbl">Objectif de production vs Réel</div>
 <div class="row text-center">
 <div class="col-6">
-<div class="text-muted small">Biogaz -- Objectif</div>
+<div class="text-muted small">Biogaz : Objectif</div>
 <input type="number" class="form-control form-control-sm mt-1" id="obj-biogaz" placeholder="m³/jour" oninput="majComparaisonProd()">
 <div class="fw-bold mt-1" id="ind-biogaz" style="font-size:1.5rem">---</div>
 </div>
@@ -3688,7 +3688,7 @@ class LSTMCell:
 
 class PredictionEngine:
     """
-    Moteur de prédiction Section 7 -- Deep Learning Haute Performance.
+    Moteur de prédiction : Deep Learning Haute Performance.
     - Utilise UNIQUEMENT les données capteurs réelles fournies.
     - LSTM + mécanisme d'attention temporelle simple.
     - Réentraînement automatique détecté via hash des données.
@@ -3699,7 +3699,7 @@ class PredictionEngine:
         "temp_digesteur": (30.0, 45.0),   # °C
         "temp_pbr": (20.0, 35.0),         # °C
         "ph_pbr": (6.5, 8.5),
-        "debit_biogaz": (5.0, 25.0),      # m³/h
+        "debit_d'eau": (5.0, 25.0),      # m³/h
         "vol_eau_saturee": (20.0, 80.0),  # L
         "production_spiruline": (50.0, 500.0),  # g/jour
     }
@@ -3728,7 +3728,7 @@ class PredictionEngine:
         self._weekly_cache: Optional[Dict] = None
         self._cache_ts: Optional[datetime] = None
         self._train_history: deque = deque(maxlen=52)   # 52 semaines max
-        logger.info("✅ PredictionEngine Section 7 initialisé (LSTM + Attention)")
+        logger.info("✅ PredictionEngine initialisé (LSTM + Attention)")
 
     # ── Normalisation min-max ──────────────────────────────────────────────────
     @staticmethod
@@ -3744,7 +3744,7 @@ class PredictionEngine:
     # ── Attention temporelle ───────────────────────────────────────────────────
     @staticmethod
     def _attention_weights(sequence: np.ndarray) -> np.ndarray:
-        """Poids d'attention basés sur la variance locale -- données récentes pondérées."""
+        """Poids d'attention basés sur la variance locale : données récentes pondérées."""
         T = len(sequence)
         if T < 2:
             return np.ones(T) / T
@@ -3778,13 +3778,25 @@ class PredictionEngine:
     # ── Prédiction biogaz ──────────────────────────────────────────────────────
     def _predict_biogaz_semaine(self, historical: Dict) -> Dict:
         """Prédit la production biogaz (m³) pour la semaine suivante."""
-        gas = np.array(historical["digester"].get("gas_flow", [])[-168:], dtype=float)   # 7j × 24h
+        gas = np.array(historical["digester"].get("gas_flow", [])[-168:], dtype=float)
         temp_d = np.array(historical["digester"].get("temperature", [])[-168:], dtype=float)
         ch4 = np.array(historical["digester"].get("ch4_concentration", [])[-168:], dtype=float)
         temp_p = np.array(historical["photobioreactor"].get("temperature", [])[-168:], dtype=float)
+        # Si gas_flow est absent ou tout à zéro, utiliser temp seul pour prédire
+        gas_is_zero = len(gas) == 0 or float(np.sum(np.abs(gas))) < 0.01
+        if gas_is_zero:
+            # Prédiction basée température seule (modèle Gompertz simplifié)
+            T = len(temp_d)
+            if T < 6:
+                return {"valeur_m3": 12.0, "confidence": 0.55, "source": "defaut_temp_insuffisante", "variation_pct": 0.0}
+            mean_temp = float(np.mean(temp_d[-T:]))
+            # Facteur température : optimum 35°C, référence 1.4 m³/j pour 250L
+            temp_factor = max(0.3, 1.0 - abs(mean_temp - 35.0) * 0.05)
+            prod_m3 = round(1.4 * 7 * temp_factor, 1)
+            conf = min(0.72, 0.45 + T / 500.0)
+            return {"valeur_m3": prod_m3, "confidence": round(conf, 3), "source": "modele_temperature", "variation_pct": 0.0}
         T = min(len(gas), len(temp_d), len(ch4), len(temp_p))
         if T < 24:
-            # Pas assez de données : extrapolation simple
             mean_flow = float(np.mean(gas)) if len(gas) > 0 else 12.0
             return {
                 "valeur_m3": round(mean_flow * 24 * 7, 1),
@@ -3846,6 +3858,29 @@ class PredictionEngine:
         temp_p = np.array(historical["photobioreactor"].get("temperature", [])[-168:], dtype=float)
         vol_sat = np.array(historical["photobioreactor"].get("vol_saturated_water", [])[-168:], dtype=float)
         light = np.array(historical["photobioreactor"].get("light_intensity", [])[-168:], dtype=float)
+        # Si biomasse absente ou nulle, prédire avec température + pH seuls
+        biomass_is_zero = len(biomass) == 0 or float(np.sum(np.abs(biomass))) < 0.01
+        if biomass_is_zero:
+            T_temp = len(temp_p)
+            if T_temp < 6:
+                return {"valeur_g": 45.0, "confidence": 0.52, "source": "defaut_temp_insuffisante", "variation_pct": 0.0, "harvest_in_hours": 168}
+            mean_temp = float(np.mean(temp_p[-T_temp:]))
+            # Facteur temp : optimum 30°C pour spiruline
+            temp_factor = max(0.4, 1.0 - abs(mean_temp - 30.0) * 0.04)
+            # Facteur pH si disponible
+            ph_factor = 1.0
+            if len(ph) > 0:
+                mean_ph = float(np.mean(ph[-min(24, len(ph)):]))
+                if 8.5 <= mean_ph <= 9.2:
+                    ph_factor = 1.0
+                elif 7.5 <= mean_ph < 8.5 or 9.2 < mean_ph <= 10.0:
+                    ph_factor = 0.85
+                else:
+                    ph_factor = 0.65
+            # Modèle Monod simplifié : 0.5 g/L/j pour 10L = 5g/j
+            prod_g = round(5.0 * 7 * temp_factor * ph_factor, 1)
+            conf = min(0.68, 0.40 + T_temp / 400.0)
+            return {"valeur_g": prod_g, "confidence": round(conf, 3), "source": "modele_temp_pH", "variation_pct": 0.0, "harvest_in_hours": 120}
         T = min(len(biomass), len(ph), len(temp_p), len(vol_sat), len(light))
         if T < 24:
             mean_b = float(np.mean(biomass)) if len(biomass) > 0 else 4.5
@@ -4002,11 +4037,11 @@ class PredictionEngine:
         fourch_b_min = max(mn_b, prix_b - 30)
         fourch_b_max = min(mx_b, prix_b + 30)
         if var_b > 5:
-            justif_b = f"Production en hausse +{var_b:.1f}%, demande soutenue -- augmenter le prix de {abs(adj_b)*100:.0f}%"
+            justif_b = f"Production en hausse +{var_b:.1f}%, demande soutenue : augmenter le prix de {abs(adj_b)*100:.0f}%"
         elif var_b < -5:
-            justif_b = f"Production en baisse {var_b:.1f}% -- réduire légèrement le prix pour maintenir les volumes"
+            justif_b = f"Production en baisse {var_b:.1f}% : réduire légèrement le prix pour maintenir les volumes"
         else:
-            justif_b = "Production stable -- maintenir le positionnement médian du marché béninois"
+            justif_b = "Production stable : maintenir le positionnement médian du marché béninois"
 
         # ── Spiruline (toujours en FCFA/kg) ──
         prix_fraiche = self.MARKET["spiruline_fraiche"]["valeur"]
@@ -4031,11 +4066,11 @@ class PredictionEngine:
         fourch_s_min = mn_s
         fourch_s_max = mx_s
         if var_s > 6:
-            justif_s = f"Biomasse en forte hausse +{var_s:.1f}% -- privilégier la spiruline séchée (prime qualité, +{abs(adj_s)*100:.0f}%)"
+            justif_s = f"Biomasse en forte hausse +{var_s:.1f}% : privilégier la spiruline séchée (prime qualité, +{abs(adj_s)*100:.0f}%)"
         elif var_s < -6:
-            justif_s = f"Production en recul {var_s:.1f}% -- privilégier la vente fraîche pour maintenir la clientèle"
+            justif_s = f"Production en recul {var_s:.1f}% : privilégier la vente fraîche pour maintenir la clientèle"
         else:
-            justif_s = "Croissance régulière de la biomasse -- prix d'entrée compétitif maintenu entre frais et séché"
+            justif_s = "Croissance régulière de la biomasse : prix d'entrée compétitif maintenu entre frais et séché"
 
         # Tendances ventes internes (4 dernières semaines)
         tendance_ventes = "stable"
@@ -4051,13 +4086,13 @@ class PredictionEngine:
 
         # Saisonnalité détectée
         if 10 <= week_num <= 22:
-            saisonnalite = "Saison forte (Carême -- demande élevée)"
+            saisonnalite = "Saison forte (Carême : demande élevée)"
         elif 23 <= week_num <= 35:
             saisonnalite = "Saison intermédiaire"
         elif 36 <= week_num <= 48:
-            saisonnalite = "Saison faible -- stimuler les ventes"
+            saisonnalite = "Saison faible : stimuler les ventes"
         else:
-            saisonnalite = "Période de fêtes -- demande modérée"
+            saisonnalite = "Période de fêtes : demande modérée"
 
         return {
             "biogaz": {
@@ -4115,7 +4150,7 @@ class PredictionEngine:
 
         # Confiance globale -- démarre à 0% et monte progressivement avec le nombre
         # de mesures réelles reçues. Sous 10 mesures : confiance non significative.
-        if measurements_count < 10:
+        if measurements_count < 3:
             conf_globale = None
         else:
             base_conf = (
@@ -4186,7 +4221,7 @@ class SENDashboard:
         self._setup_login()
         self._setup_routes()
         self._setup_socketio()
-        logger.info("✅ Dashboard SEN v3.5 initialisé avec succès -- Section 8.3 Performance Capteurs activée")
+        logger.info("✅ Dashboard SEN v3.5 initialisé avec succès  Performance Capteurs activée")
 
     # ── Config ─────────────────────────────────────────────────────────────────
     def _load_config(self, config_path: str) -> Dict:
@@ -4194,7 +4229,7 @@ class SENDashboard:
             with open(config_path, encoding="utf-8") as f:
                 return json.load(f)
         except FileNotFoundError:
-            logger.warning(f"Configuration non trouvée : {config_path} -- utilisation des valeurs par défaut")
+            logger.warning(f"Configuration non trouvée : {config_path} : utilisation des valeurs par défaut")
             return {
                 "project": {"name": "SEN", "version": "3.5"},
                 "dashboard": {"refresh_interval": 2, "max_alarms": 20, "data_retention_days": 30},
@@ -4361,7 +4396,7 @@ class SENDashboard:
                 realtime_data=self.realtime_data,
                 measurements_count=self.measurements_count,
             )
-            logger.info("✅ Prédictions hebdomadaires Section 7 initialisées")
+            logger.info("✅ Prédictions hebdomadaires initialisées")
         except Exception as exc:
             logger.warning(f"⚠ PredictionEngine init partielle : {exc}")
             self.weekly_predictions = {}
@@ -4693,7 +4728,7 @@ class SENDashboard:
         def forbidden(e):
             if request.accept_mimetypes.accept_html:
                 return render("forbidden", user=current_user), 403
-            return jsonify({"error": "Accès refusé -- permission insuffisante", "code": 403}), 403
+            return jsonify({"error": "Accès refusé : permission insuffisante", "code": 403}), 403
 
         @app.errorhandler(404)
         def not_found(e):
@@ -4789,7 +4824,7 @@ class SENDashboard:
         @login_required
         def api_capteurs_performance():
             """
-            API Section 8.3 -- Performance des capteurs.
+            API Performance des capteurs.
             Retourne : taux de disponibilité, alarmes déclenchées, stabilité paramètres critiques.
             Paramètre GET : periode = 24h | 7d | 30d | 90d (défaut : 7d)
             """
@@ -4904,7 +4939,7 @@ class SENDashboard:
         @login_required
         def api_predictions_weekly():
             """
-            Section 7 -- Prédictions hebdomadaires complètes.
+            Prédictions hebdomadaires complètes.
             Toutes les prédictions sont calculées depuis les capteurs réels uniquement.
             Réentraînement automatique détecté si nouvelles données disponibles.
             """
@@ -5173,7 +5208,7 @@ class SENDashboard:
         self._update_thread.start()
         logger.info(f"🚀 Dashboard SEN v3.5 démarré → http://{host}:{port}")
         logger.info(" Comptes : admin | operator | viewer (mot de passe : sen2024)")
-        self.socketio.run(self.app, host=host, port=port, debug=False)
+        self.socketio.run(self.app, host=host, port=port, debug=False, allow_unsafe_werkzeug=True)
 
     def stop(self):
         self._stop_event.set()
@@ -5191,7 +5226,7 @@ def main():
     args = parser.parse_args()
 
     print("\n" + "=" * 60)
-    print(" S E N D A S H B O A R D -- Version 3.5")
+    print(" S E N D A S H B O A R D : Version 3.5")
     print("=" * 60)
 
     Path("config").mkdir(exist_ok=True)
