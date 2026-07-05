@@ -1262,12 +1262,12 @@ body{background-color:#121212;color:#fff;font-family:'Segoe UI',sans-serif;}
 <small class="text-muted d-block mb-3"><i class="fas fa-info-circle me-1"></i>Pas de capteur pH installé sur le digesteur.</small>
 <div class="mb-3">
 <label class="form-label">Température Max Digesteur (°C)</label>
-<input type="number" class="form-control bg-dark text-white" value="38.0" step="0.1"
+<input type="number" id="cfg-dig-temp-max" class="form-control bg-dark text-white" value="{{ config.alarmes_digesteur.temp_max }}" step="0.1"
 {% if not user.has_permission('configure') %}disabled{% endif %}>
 </div>
 <button class="btn btn-success"
 {% if not user.has_permission('configure') %}disabled{% endif %}
-onclick="showMsg('Configuration alarmes digesteur sauvegardée','success')">
+onclick="saveConfig('alarmes_digesteur', {temp_max: parseFloat(document.getElementById('cfg-dig-temp-max').value)}, this)">
 <i class="fas fa-save me-2"></i>Sauvegarder
 </button>
 </div>
@@ -1278,22 +1278,22 @@ onclick="showMsg('Configuration alarmes digesteur sauvegardée','success')">
 <small class="text-muted d-block mb-3"><i class="fas fa-info-circle me-1"></i>Capteur pH et température installés sur le PBR.</small>
 <div class="mb-3">
 <label class="form-label">Température Max PBR (°C)</label>
-<input type="number" class="form-control bg-dark text-white" value="30.0" step="0.1"
+<input type="number" id="cfg-pbr-temp-max" class="form-control bg-dark text-white" value="{{ config.alarmes_pbr.temp_max }}" step="0.1"
 {% if not user.has_permission('configure') %}disabled{% endif %}>
 </div>
 <div class="mb-3">
 <label class="form-label">pH Min PBR</label>
-<input type="number" class="form-control bg-dark text-white" value="7.0" step="0.01"
+<input type="number" id="cfg-ph-min" class="form-control bg-dark text-white" value="{{ config.alarmes_pbr.ph_min }}" step="0.01"
 {% if not user.has_permission('configure') %}disabled{% endif %}>
 </div>
 <div class="mb-3">
 <label class="form-label">pH Max PBR</label>
-<input type="number" class="form-control bg-dark text-white" value="8.5" step="0.01"
+<input type="number" id="cfg-ph-max" class="form-control bg-dark text-white" value="{{ config.alarmes_pbr.ph_max }}" step="0.01"
 {% if not user.has_permission('configure') %}disabled{% endif %}>
 </div>
 <button class="btn btn-success"
 {% if not user.has_permission('configure') %}disabled{% endif %}
-onclick="showMsg('Configuration alarmes PBR sauvegardée','success')">
+onclick="saveConfig('alarmes_pbr', {temp_max: parseFloat(document.getElementById('cfg-pbr-temp-max').value), ph_min: parseFloat(document.getElementById('cfg-ph-min').value), ph_max: parseFloat(document.getElementById('cfg-ph-max').value)}, this)">
 <i class="fas fa-save me-2"></i>Sauvegarder
 </button>
 </div>
@@ -1305,22 +1305,22 @@ onclick="showMsg('Configuration alarmes PBR sauvegardée','success')">
 <h5><i class="fas fa-chart-line me-2"></i>Paramètres de Surveillance</h5>
 <div class="mb-3">
 <label class="form-label">Intervalle de Rafraîchissement (s)</label>
-<input type="number" class="form-control bg-dark text-white" value="2" min="1" max="60"
+<input type="number" id="cfg-refresh" class="form-control bg-dark text-white" value="{{ config.surveillance.refresh_interval }}" min="1" max="60"
 {% if not user.has_permission('configure') %}disabled{% endif %}>
 </div>
 <div class="mb-3">
 <label class="form-label">Rétention des Données (jours)</label>
-<input type="number" class="form-control bg-dark text-white" value="30" min="1" max="365"
+<input type="number" id="cfg-retention" class="form-control bg-dark text-white" value="{{ config.surveillance.retention_days }}" min="1" max="365"
 {% if not user.has_permission('configure') %}disabled{% endif %}>
 </div>
 <div class="mb-3">
 <label class="form-label">Seuil Biomasse Min (g/L)</label>
-<input type="number" class="form-control bg-dark text-white" value="3.5" min="1" max="10" step="0.1"
+<input type="number" id="cfg-biomasse-min" class="form-control bg-dark text-white" value="{{ config.surveillance.biomasse_min }}" min="1" max="10" step="0.1"
 {% if not user.has_permission('configure') %}disabled{% endif %}>
 </div>
 <button class="btn btn-success"
 {% if not user.has_permission('configure') %}disabled{% endif %}
-onclick="showMsg('Configuration de surveillance sauvegardée','success')">
+onclick="saveConfig('surveillance', {refresh_interval: parseInt(document.getElementById('cfg-refresh').value), retention_days: parseInt(document.getElementById('cfg-retention').value), biomasse_min: parseFloat(document.getElementById('cfg-biomasse-min').value)}, this)">
 <i class="fas fa-save me-2"></i>Sauvegarder
 </button>
 </div>
@@ -1331,17 +1331,17 @@ onclick="showMsg('Configuration de surveillance sauvegardée','success')">
 <small class="text-muted d-block mb-3">Paramètres de gestion du volume d'eau enrichie injectée dans le PBR.</small>
 <div class="mb-3">
 <label class="form-label">Volume cible par cycle (L)</label>
-<input type="number" class="form-control bg-dark text-white" value="50.0" step="0.5"
+<input type="number" id="cfg-vol-cible" class="form-control bg-dark text-white" value="{{ config.eau_saturee.volume_cible_cycle }}" step="0.5"
 {% if not user.has_permission('configure') %}disabled{% endif %}>
 </div>
 <div class="mb-3">
 <label class="form-label">Alerte volume bas (L)</label>
-<input type="number" class="form-control bg-dark text-white" value="10.0" step="0.5"
+<input type="number" id="cfg-vol-alerte" class="form-control bg-dark text-white" value="{{ config.eau_saturee.alerte_volume_bas }}" step="0.5"
 {% if not user.has_permission('configure') %}disabled{% endif %}>
 </div>
 <button class="btn btn-success"
 {% if not user.has_permission('configure') %}disabled{% endif %}
-onclick="showMsg('Configuration eau saturée sauvegardée','success')">
+onclick="saveConfig('eau_saturee', {volume_cible_cycle: parseFloat(document.getElementById('cfg-vol-cible').value), alerte_volume_bas: parseFloat(document.getElementById('cfg-vol-alerte').value)}, this)">
 <i class="fas fa-save me-2"></i>Sauvegarder
 </button>
 </div>
@@ -1366,6 +1366,28 @@ function showMsg(msg, type){
     a.className='alert alert-'+type+' alert-dismissible fade show mt-3';
     a.innerHTML='<i class="fas fa-check-circle me-2"></i>'+msg+'<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
     document.querySelector('.content').appendChild(a);
+}
+function saveConfig(section, values, btn){
+    if(btn){ btn.disabled = true; }
+    fetch('/api/config', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({section: section, values: values})
+    })
+    .then(function(r){ return r.json().then(function(body){ return {ok: r.ok, body: body}; }); })
+    .then(function(res){
+        if(res.ok && res.body.status === 'ok'){
+            showMsg('Configuration ' + section + ' sauvegardée', 'success');
+        } else {
+            showMsg('Échec de sauvegarde : ' + (res.body.message || 'erreur inconnue'), 'danger');
+        }
+    })
+    .catch(function(err){
+        showMsg('Erreur réseau lors de la sauvegarde : ' + err, 'danger');
+    })
+    .finally(function(){
+        if(btn){ btn.disabled = false; }
+    });
 }
 </script>
 </body></html>
@@ -3761,6 +3783,12 @@ class PredictionEngine:
     def _compute_hash(self, data: Dict, measurements_count: int = 0) -> str:
         key = str(len(data.get("digester", {}).get("gas_flow", [])))
         key += str(len(data.get("photobioreactor", {}).get("biomass_density", [])))
+        # Correction : le pH et les températures doivent aussi invalider le cache,
+        # sinon une anomalie de pH/température peut rester invisible jusqu'à 1h
+        # si gas_flow/biomass_density n'ont pas changé de longueur entre-temps.
+        key += "_p" + str(len(data.get("photobioreactor", {}).get("ph", [])))
+        key += "_td" + str(len(data.get("digester", {}).get("temperature", [])))
+        key += "_tp" + str(len(data.get("photobioreactor", {}).get("temperature", [])))
         # Tant que la confiance est encore en phase de montée (< 200 mesures),
         # chaque nouvelle mesure doit invalider le cache pour que la confiance avance.
         key += "_m" + str(min(measurements_count, 200))
@@ -3938,8 +3966,10 @@ class PredictionEngine:
         }
 
     # ── Détection anomalies ────────────────────────────────────────────────────
-    def _detect_anomalies(self, realtime: Dict) -> List[Dict]:
-        """Détecte les valeurs capteurs hors plage normale."""
+    def _detect_anomalies(self, realtime: Dict, thresholds: Optional[Dict] = None) -> List[Dict]:
+        """Détecte les valeurs capteurs hors plage normale.
+        `thresholds` (optionnel) permet de surcharger SENSOR_RANGES avec les seuils
+        définis par l'utilisateur dans la page Configuration (ex: pH Min/Max PBR)."""
         anomalies = []
         mapping = {
             "temp_digesteur": ("digester", "temperature"),
@@ -3948,11 +3978,14 @@ class PredictionEngine:
             "debit_biogaz": ("digester", "gas_flow"),
             "vol_eau_saturee": ("photobioreactor", "vol_saturated_water"),
         }
+        ranges = dict(self.SENSOR_RANGES)
+        if thresholds:
+            ranges.update(thresholds)
         for key, (comp, field) in mapping.items():
             val = realtime.get(comp, {}).get(field)
             if val is None:
                 continue
-            lo, hi = self.SENSOR_RANGES[key]
+            lo, hi = ranges[key]
             if not (lo <= val <= hi):
                 ecart = max(val - hi, lo - val)
                 severity = "critique" if ecart > (hi - lo) * 0.2 else "attention"
@@ -4127,6 +4160,7 @@ class PredictionEngine:
         realtime_data: Dict,
         sales_history: Optional[List[Dict]] = None,
         measurements_count: int = 0,
+        thresholds: Optional[Dict] = None,
     ) -> Dict:
         """
         Calcule toutes les prédictions hebdomadaires.
@@ -4144,7 +4178,7 @@ class PredictionEngine:
         logger.info("🔄 PredictionEngine -- calcul prédictions hebdomadaires depuis capteurs réels")
         pred_biogaz = self._predict_biogaz_semaine(historical_data)
         pred_spiruline = self._predict_spiruline_semaine(historical_data)
-        anomalies = self._detect_anomalies(realtime_data)
+        anomalies = self._detect_anomalies(realtime_data, thresholds=thresholds)
         maintenance = self._predict_maintenance(historical_data, anomalies)
         market_pricing = self._analyze_market_pricing(pred_biogaz, pred_spiruline, sales_history)
 
@@ -4224,16 +4258,42 @@ class SENDashboard:
         logger.info("✅ Dashboard SEN v3.5 initialisé avec succès  Performance Capteurs activée")
 
     # ── Config ─────────────────────────────────────────────────────────────────
+    DEFAULT_CONFIG = {
+        "project": {"name": "SEN", "version": "3.5"},
+        "dashboard": {"refresh_interval": 2, "max_alarms": 20, "data_retention_days": 30},
+        "alarmes_digesteur": {"temp_max": 38.0},
+        "alarmes_pbr": {"temp_max": 30.0, "ph_min": 7.0, "ph_max": 8.5},
+        "surveillance": {"refresh_interval": 2, "retention_days": 30, "biomasse_min": 3.5},
+        "eau_saturee": {"volume_cible_cycle": 50.0, "alerte_volume_bas": 10.0},
+    }
+
     def _load_config(self, config_path: str) -> Dict:
+        self.config_path = config_path
         try:
             with open(config_path, encoding="utf-8") as f:
-                return json.load(f)
+                loaded = json.load(f)
+            # Complète avec les valeurs par défaut si des clés manquent (ex: 1er lancement)
+            merged = json.loads(json.dumps(self.DEFAULT_CONFIG))
+            for section, values in loaded.items():
+                if isinstance(values, dict) and section in merged:
+                    merged[section].update(values)
+                else:
+                    merged[section] = values
+            return merged
         except FileNotFoundError:
             logger.warning(f"Configuration non trouvée : {config_path} : utilisation des valeurs par défaut")
-            return {
-                "project": {"name": "SEN", "version": "3.5"},
-                "dashboard": {"refresh_interval": 2, "max_alarms": 20, "data_retention_days": 30},
-            }
+            return json.loads(json.dumps(self.DEFAULT_CONFIG))
+
+    def _save_config(self) -> None:
+        """Persiste la configuration courante sur disque (config/sen_config.json)."""
+        try:
+            os.makedirs(os.path.dirname(self.config_path) or ".", exist_ok=True)
+            with open(self.config_path, "w", encoding="utf-8") as f:
+                json.dump(self.config, f, ensure_ascii=False, indent=2)
+            logger.info(f"✅ Configuration sauvegardée dans {self.config_path}")
+        except Exception as exc:
+            logger.error(f"Erreur sauvegarde configuration : {exc}")
+            raise
 
     # ── Initialisation ─────────────────────────────────────────────────────────
     def _initialize_components(self):
@@ -4380,6 +4440,21 @@ class SENDashboard:
         ramp = min(1.0, self.measurements_count / 200.0)
         return round(base * ramp, 3)
 
+    def _config_thresholds(self) -> Dict:
+        """Construit les plages de détection d'anomalies à partir de la config utilisateur
+        (page Configuration), pour que les seuils saisis dans l'UI soient vraiment utilisés."""
+        cfg = self.config or {}
+        pbr = cfg.get("alarmes_pbr", {})
+        dig = cfg.get("alarmes_digesteur", {})
+        thresholds = {}
+        if "ph_min" in pbr and "ph_max" in pbr:
+            thresholds["ph_pbr"] = (float(pbr["ph_min"]), float(pbr["ph_max"]))
+        if "temp_max" in pbr:
+            thresholds["temp_pbr"] = (20.0, float(pbr["temp_max"]))
+        if "temp_max" in dig:
+            thresholds["temp_digesteur"] = (30.0, float(dig["temp_max"]))
+        return thresholds
+
     def _initialize_predictions(self):
         # Prédictions de base pour l'UI analytics (24h / 48h)
         # Confiance progressive : démarre à 0, monte avec le nombre de mesures reçues
@@ -4395,6 +4470,7 @@ class SENDashboard:
                 historical_data=self.historical_data,
                 realtime_data=self.realtime_data,
                 measurements_count=self.measurements_count,
+                thresholds=self._config_thresholds(),
             )
             logger.info("✅ Prédictions hebdomadaires initialisées")
         except Exception as exc:
@@ -4797,7 +4873,39 @@ class SENDashboard:
         @login_required
         @SENDashboard._require_permission("configure")
         def configuration_dashboard():
-            return render("configuration_dashboard", user=current_user, derniere_maj=datetime.now().strftime("%Y-%m-%d"))
+            return render("configuration_dashboard", user=current_user, config=self.config,
+                           derniere_maj=datetime.now().strftime("%Y-%m-%d"))
+
+        @app.route("/api/config", methods=["GET"])
+        @login_required
+        def api_config_get():
+            return jsonify(self.config)
+
+        @app.route("/api/config", methods=["POST"])
+        @login_required
+        @SENDashboard._require_permission("configure")
+        def api_config_post():
+            """Sauvegarde réelle d'une section de configuration (ex: alarmes_pbr)."""
+            payload = request.get_json(silent=True) or {}
+            section = payload.get("section")
+            values = payload.get("values", {})
+            if not section or not isinstance(values, dict):
+                return jsonify({"status": "error", "message": "Paramètres invalides"}), 400
+            # Validation simple des seuils pH pour éviter une config incohérente
+            if section == "alarmes_pbr":
+                try:
+                    if "ph_min" in values and "ph_max" in values:
+                        if float(values["ph_min"]) >= float(values["ph_max"]):
+                            return jsonify({"status": "error", "message": "pH Min doit être inférieur à pH Max"}), 400
+                except (TypeError, ValueError):
+                    return jsonify({"status": "error", "message": "Valeurs pH invalides"}), 400
+            self.config.setdefault(section, {}).update(values)
+            try:
+                self._save_config()
+            except Exception as exc:
+                return jsonify({"status": "error", "message": str(exc)}), 500
+            logger.info(f"⚙️ Configuration mise à jour -- section={section} valeurs={values}")
+            return jsonify({"status": "ok", "section": section, "values": self.config[section]})
 
         @app.route("/dashboard/alarms")
         @login_required
@@ -4853,6 +4961,7 @@ class SENDashboard:
                     historical_data=self.historical_data,
                     realtime_data=self.realtime_data,
                     measurements_count=self.measurements_count,
+                    thresholds=self._config_thresholds(),
                 )
                 reco = wp.get("recommandations_prix", {})
                 b = reco.get("biogaz", {})
@@ -4948,6 +5057,7 @@ class SENDashboard:
                     historical_data=self.historical_data,
                     realtime_data=self.realtime_data,
                     measurements_count=self.measurements_count,
+                    thresholds=self._config_thresholds(),
                 )
                 self.weekly_predictions = result
                 return jsonify(result)
@@ -5221,6 +5331,13 @@ class SENDashboard:
                             if isinstance(value, (int, float)) and key not in CHAMPS_REELS:
                                 new_val = value * (1 + float(rng.uniform(-0.01, 0.01)))
                                 sensors[key] = round(new_val, 4)
+
+                # Correction : la confiance IA (page Analytique) était figée à la valeur
+                # calculée une seule fois au démarrage du serveur. On la recalcule ici à
+                # chaque cycle pour qu'elle suive vraiment measurements_count en temps réel.
+                self.predictions["biogas_production"]["confidence"] = self._confidence_from_count(0.87)
+                self.predictions["algae_growth"]["confidence"] = self._confidence_from_count(0.82)
+
                 rooms = self.socketio.server.manager.rooms.get("/", {})
                 if any(k is not None for k in rooms):
                     self.socketio.emit("realtime_update", {
